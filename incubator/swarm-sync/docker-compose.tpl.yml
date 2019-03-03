@@ -1,0 +1,30 @@
+---
+version: '3.3'
+
+services:
+  swarm-sync:
+    image: "{{ image.repository }}:{{ image.tag }}"
+    volumes:
+      - {{ volume }}:/run/swarm-sync
+{% for v in additional_volumes %}
+      - {{ v }}
+{% endfor %}
+    deploy:
+      labels:
+{% if swarm_sync_managed %}
+        - "swarm-sync.managed=true"
+{% endif %}
+{% if image.tag_pattern %}
+        - "swarm-sync.image-pattern={{ image.tag_pattern }}"
+{% endif %}
+{% if constrain_to_manager %}
+      placement:
+        constraints:
+          - node.role == manager
+{% endif %}
+    secrets:
+      - source: "{{ secret_from_value('swarm_sync_yml') }}"
+        target: /etc/swarm-sync.yml
+
+volumes:
+  {{ volume }}: {}

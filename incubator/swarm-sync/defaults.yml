@@ -1,0 +1,21 @@
+---
+image:
+  repository: kevbuk/swarm-sync
+  tag: latest
+  tag_pattern: latest
+  auto: true
+swarm_sync_yml: |
+  swarm-sync:
+    stacks:
+      - nonprod
+    updateInterval: 300000 # 5 minutes
+    git:
+      url: https://github.com/kevb/swarm-sync-example
+      branch: master
+    docker:
+      socketPath: /var/run/docker.sock
+swarm_sync_managed: True
+volume: swarm_sync_storage
+additional_volumes:
+  - "/var/run/docker.sock:/var/run/docker.sock"
+constrain_to_manager: true
