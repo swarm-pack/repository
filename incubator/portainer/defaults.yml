@@ -1,0 +1,11 @@
+---
+image:
+  repository: portainer/portainer
+  tag: latest
+  tag_pattern: latest
+  auto: true
+service_name: portainer
+portainer_data_volume: portainer_data
+swarm_sync_managed: true
+constrain_to_manager: true
+mount_docker_sock: true

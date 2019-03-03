@@ -1,0 +1,25 @@
+---
+version: '3.3'
+
+services:
+  {{ service_name }}:
+    image: "{{ image.repository }}:{{ image.tag }}"
+    deploy:
+      labels:
+        - "swarm-sync.managed={{ swarm_sync_managed }}"
+        - "swarm-sync.image-pattern={{ image.tag_pattern }}"
+{% if constrain_to_manager %}
+      placement:
+        constraints:
+          - node.role == manager
+{% endif %}
+    ports:
+      - {{ host_port }}:9000
+    volumes:
+      - {{ portainer_data_volume }}:/data
+{% if mount_docker_sock %}
+      - /var/run/docker.sock:/var/run/docker.sock
+{% endif %}
+
+volumes:
+  {{ portainer_data_volume }}: {}
