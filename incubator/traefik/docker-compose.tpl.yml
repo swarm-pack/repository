@@ -1,0 +1,55 @@
+---
+version: '3.4'
+
+services:
+  {{ service_name }}:
+
+    image: "{{ image.repository }}:{{ image.tag }}"
+
+    command:
+      - "--docker"
+      - "--docker.swarmMode"
+      - "--docker.watch"
+{% for arg in args %}
+      - "{{ arg }}"
+{% endfor %}
+
+
+# Environment
+{% for env in environment %}
+{% if loop.first %}
+    environment:
+{% endif %}
+      - {{ env }}
+{% endfor %}
+
+    deploy:
+
+      mode: {{ deploy_mode }}
+
+{% if constrain_to_manager %}
+      placement:
+        constraints:
+          - node.role == manager
+{% endif %}
+
+      labels:
+        - "swarm-sync.managed={{ swarm_sync_managed }}"
+        - "swarm-sync.image-pattern={{ image.tag_pattern }}"
+
+#Ports
+{% for port in ports %}
+{% if loop.first %}
+    ports:
+{% endif %}
+      - {{ port }}
+{% endfor %}
+
+    volumes:
+      - {{ ssl_volume_name }}:/etc/traefik/acme
+{% if mount_docker_sock %}
+      - /var/run/docker.sock:/var/run/docker.sock
+{% endif %}
+
+volumes:
+  {{ ssl_volume_name }}: {}
