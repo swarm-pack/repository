@@ -3,8 +3,8 @@ drone_server:
   service_name: drone_server
   image:
     repository: drone/drone
-    tag: v1.0.0-rc6
-    tag_pattern: glob:v1.0.*
+    tag: 1.0.0-rc6
+    tag_pattern: semver:>=1.0.0-rc.6
     auto: true
 
   deploy:

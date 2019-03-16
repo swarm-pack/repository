@@ -1,0 +1,22 @@
+service_name: drone_agent
+docker_image: drone/agent
+docker_registry: docker.io
+docker_compose_template: default
+entrypoint:
+  - /run/1Day/docker_secrets_expand.sh
+  - /bin/drone-agent
+environments:
+  nonprod:
+    docker_tag: 0.8-alpine
+    environment:
+      DRONE_SERVER: nonprod_drone_server:9000
+      DRONE_SECRET: "DOCKER-SECRET->drone_secret"
+      DRONE_NETWORK: "app_net"
+
+    secrets:
+      - drone_secret
+      - source: "docker_secrets_expand_sh"
+        target: "/run/1Day/docker_secrets_expand.sh"
+        mode: "0555"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
