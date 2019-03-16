@@ -1,0 +1,39 @@
+---
+version: '3.4'
+
+services:
+  {{ service_name }}:
+
+    image: "{{ image.repository }}:{{ image.tag }}"
+
+    environment:
+      PORT: {{ port }}
+      ROOT_URL: {{ config.root_url }}
+      MAIL_URL: {{ config.mail_url }}
+      ADMIN_USERNAME: {{ config.admin_username }}
+      ADMIN_EMAIL: {{ config.admin_email }}
+      ADMIN_PASS: {{ config.admin_password }}
+      MONGO_URL: {{ config.mongo_url }}
+      MONGO_OPLOG_URL: {{ config.mongo_oplog_url }}
+
+    deploy:
+      mode: {{ deploy.mode }}
+      replicas: {{ deploy.replicas }}
+      labels:
+{% if swarm-sync.managed %}
+        - "swarm-sync.managed=true"
+{% endif %}
+{% if image.tag_pattern %}
+        - "swarm-sync.image-pattern={{ image.tag_pattern }}"
+{% endif %}
+        - "traefik.port={{ port }}"
+        - "traefik.frontend.rule=Host:{{ traefik.hostname }}"
+
+    ports:
+      - {{ port }}
+
+    volumes:
+      - {{ uploads_volume_name }}:/app/uploads
+
+volumes:
+  {{ uploads_volume_name }}: {}
