@@ -1,0 +1,39 @@
+---
+version: '3.4'
+
+services:
+  {{ drone_server.service_name }}:
+
+    image: "{{ drone_server.image.repository }}:{{ drone_server.image.tag }}"
+    deploy:
+      mode: {{ drone_server.deploy.mode }}
+      replicas: {{ drone_server.deploy.replicas }}
+      endpoint_mode: {{ drone_server.deploy.endpoint_mode }}
+{% if drone_server.deploy.placement_constraints | length %}
+      placement:
+        constraints:
+{% for p in drone_server.deploy.placement_constraints %}
+          - "{{ p }}"
+{% endfor %}
+{% endif %}
+      labels:
+{% if drone_server.swarm-sync.managed %}
+        - "swarm-sync.managed=true"
+{% endif %}
+{% if drone_server.image.tag_pattern %}
+        - "swarm-sync.image-pattern={{ drone_server.image.tag_pattern }}"
+{% endif %}
+        - "traefik.port=8000"
+        - "traefik.frontend.rule=Host:{{ drone_server.traefik.hostname }}"
+        - "traefik.backend.loadbalancer.stickiness={{ drone_server.traefik.stickiness }}"
+
+    environment:
+      DRONE_HOST: "{{ drone_server.drone_host }}"
+{% for key, value in drone_server.env %}
+      {{ key }}: {{ value }}
+{% endfor %}
+      
+    volumes:
+      - {{ drone_server.db_volume_name }}:/var/lib/drone/
+volumes:
+  {{ drone_server.db_volume_name }}: {}

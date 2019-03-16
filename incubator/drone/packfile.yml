@@ -1,0 +1,18 @@
+pack:
+  name: drone
+  version: 0.0.1
+  home: https://drone.io/
+  description: Drone is a Continuous Delivery system built on container technology
+  keywords:
+    - continuous-delivery
+    - continuous-deployment
+    - continuous-integration
+    - docker
+    - drone
+    - drone.io
+    - go
+  sources:
+    - https://github.com/drone/drone
+  maintainers:
+    - name: Kevin Bennett
+      email: kevbuk@gmail.com
