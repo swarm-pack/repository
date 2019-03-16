@@ -1,0 +1,34 @@
+---
+service_name: ansible-semaphore
+image:
+  repository: ansiblesemaphore/semaphore
+  tag: v2.5.1
+  tag_pattern: "semver:^v2.5.1"
+  auto: true
+
+deploy:
+  mode: replicated
+  replicas: 1
+  placement_constraints: []
+
+swarm-sync:
+  managed: true
+
+traefik:
+  hostname: drone.example.com
+  stickiness: true
+
+config:
+
+  # Admin user
+  admin: admin
+  admin_email: admin@example.com
+  admin_name: Admin
+  admin_password: changeme
+
+  # Database
+  db: semaphore
+  db_host: semaphore-mysql
+  db_port: 3306
+  db_user: semaphore
+  db_pass: changeme

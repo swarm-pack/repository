@@ -1,0 +1,43 @@
+---
+version: '3.6'
+
+services:
+  {{ service_name }}:
+
+    image: "{{ image.repository }}:{{ image.tag }}"
+    deploy:
+      mode: {{ deploy.mode }}
+      replicas: {{ deploy.replicas }}
+
+{% if deploy.placement_constraints | length %}
+      placement:
+        constraints:
+{% for p in deploy.placement_constraints %}
+          - "{{ p }}"
+{% endfor %}
+{% endif %}
+
+      labels:
+{% if swarm-sync.managed %}
+        - "swarm-sync.managed=true"
+{% endif %}
+{% if image.tag_pattern %}
+        - "swarm-sync.image-pattern={{ image.tag_pattern }}"
+{% endif %}
+        - "traefik.port=3000"
+        - "traefik.frontend.rule=Host:{{ traefik.hostname }}"
+        - "traefik.backend.loadbalancer.stickiness={{ traefik.stickiness }}"
+
+    environment:
+      SEMAPHORE_DB_HOST: "{{ config.db_host }}"
+      SEMAPHORE_DB_PORT: "{{ config.db_port }}"
+      SEMAPHORE_DB: "{{ config.db }}"
+      SEMAPHORE_DB_USER: "{{ config.db_user }}"
+      SEMAPHORE_DB_PASS: "{{ config.db_pass }}"
+      SEMAPHORE_ADMIN: "{{ config.admin }}"
+      SEMAPHORE_ADMIN_EMAIL: "{{ config.admin_email }}"
+      SEMAPHORE_ADMIN_NAME: "{{ config.admin_name }}"
+      SEMAPHORE_ADMIN_PASSWORD: "{{ config.admin_password }}"
+{% for key, value in environment %}
+      {{ key }}: {{ value }}
+{% endfor %}

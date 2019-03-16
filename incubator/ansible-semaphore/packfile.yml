@@ -1,0 +1,16 @@
+pack:
+  name: ansible-semaphore
+  version: 0.0.1
+  home: https://github.com/ansible-semaphore/semaphore
+  description: Ansible web UI, an open source alternative to Ansible Tower
+  keywords:
+    - ansible
+    - automation
+    - deployment
+    - ops
+    - configuration
+  sources:
+    - https://hub.docker.com/r/ansiblesemaphore/semaphore/
+  maintainers:
+    - name: Kevin Bennett
+      email: kevbuk@gmail.com
