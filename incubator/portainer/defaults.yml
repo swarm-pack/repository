@@ -1,11 +1,17 @@
 ---
 image:
   repository: portainer/portainer
-  tag: latest
-  tag_pattern: latest
+  tag: 1.20.2
+  tag_pattern: semver:^1.20.2
   auto: true
 service_name: portainer
 portainer_data_volume: portainer_data
 swarm_sync_managed: true
 constrain_to_manager: true
 mount_docker_sock: true
+
+traefik:
+  enabled: true
+  port: 3000
+  hostname: portainer.example.com
+  stickiness: true

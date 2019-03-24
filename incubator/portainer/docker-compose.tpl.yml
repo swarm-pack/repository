@@ -8,13 +8,16 @@ services:
       labels:
         - "swarm-sync.managed={{ swarm_sync_managed }}"
         - "swarm-sync.image-pattern={{ image.tag_pattern }}"
+{%  if traefik.enabled %}
+        - "traefik.port={{ traefik.port }}"
+        - "traefik.frontend.rule=Host:{{ traefik.hostname }}"
+        - "traefik.backend.loadbalancer.stickiness={{ traefik.stickiness }}"
+{% endif %}
 {% if constrain_to_manager %}
       placement:
         constraints:
           - node.role == manager
 {% endif %}
-    ports:
-      - {{ host_port }}:9000
     volumes:
       - {{ portainer_data_volume }}:/data
 {% if mount_docker_sock %}
