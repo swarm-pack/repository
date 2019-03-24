@@ -1,9 +1,8 @@
 ---
 image:
   repository: kevbuk/swarm-sync
-  tag: latest
-  tag_pattern: latest
-  auto: true
+  tag: "0.0.2"
+  tag_pattern: "semver:^0.0.2"
 swarm_sync_yml: |
   swarm-sync:
     stacks:
@@ -19,7 +18,6 @@ volume: swarm_sync_storage
 additional_volumes:
   - "/var/run/docker.sock:/var/run/docker.sock"
 constrain_to_manager: true
-
-gitcrypt:
+git_crypt:
   enabled: false
   key: 

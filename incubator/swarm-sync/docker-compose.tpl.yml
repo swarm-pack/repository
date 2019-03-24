@@ -25,8 +25,8 @@ services:
     secrets:
       - source: "{{ secret_from_value('swarm_sync_yml') }}"
         target: /etc/swarm-sync.yml
-{% if gitcrypt.enabled %}
-      - source: "{{ secret_from_value('gitcrypt.key') }}"
+{% if git_crypt.enabled %}
+      - source: "{{ secret_from_value('git_crypt.key') }}"
         target: /run/secrets/git-crypt-key
 {% endif %}
 
