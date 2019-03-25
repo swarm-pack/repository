@@ -21,3 +21,4 @@ constrain_to_manager: true
 git_crypt:
   enabled: false
   key: 
+id_rsa: 

@@ -29,6 +29,11 @@ services:
       - source: "{{ secret_from_value('git_crypt.key') }}"
         target: /run/secrets/git-crypt-key
 {% endif %}
+{% if id_rsa %}
+      - source: "{{ secret_from_value('id_rsa') }}"
+        target: /root/.ssh/id_rsa
+        mode: 0600
+{% endif %}
 
 volumes:
   {{ volume }}: {}
