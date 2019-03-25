@@ -16,11 +16,11 @@ services:
 
 
 # Environment
-{% for env in environment %}
+{% for key, value in environment %}
 {% if loop.first %}
     environment:
 {% endif %}
-      - {{ env }}
+      {{ key }}: {{ value }}
 {% endfor %}
 
     deploy:

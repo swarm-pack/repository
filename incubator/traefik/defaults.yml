@@ -9,7 +9,7 @@ deploy_mode: global
 ssl_volume_name: traefik_ssl
 swarm_sync_managed: true
 environment:
-  - EXAMPLE=default
+  # foo: bar
 ports:
   - "{target: 433, published: 443, protocol: tcp, mode: ingress}"
   - "{target: 80, published: 80, protocol: tcp, mode: ingress}"
