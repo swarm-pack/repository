@@ -18,7 +18,11 @@ volume: swarm_sync_storage
 additional_volumes:
   - "/var/run/docker.sock:/var/run/docker.sock"
 constrain_to_manager: true
+
 git_crypt:
   enabled: false
   key: 
+
 id_rsa: 
+  enabled: false
+  key: 
