@@ -1,8 +1,8 @@
 ---
 image:
   repository: swarmpack/swarm-sync
-  tag: "v0.0.14"
-  tag_pattern: "semver:^v0.0.14"
+  tag: "v0.0.15"
+  tag_pattern: "semver:^v0.0.15"
 swarm_sync_yml: |
   swarm-sync:
     stacks:
