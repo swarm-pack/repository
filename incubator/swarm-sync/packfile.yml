@@ -7,7 +7,6 @@ pack:
     - docker
     - swarm
     - gitops
-    - configuration
   sources:
     - https://github.com/swarm-pack/swarm-sync
   maintainers:
