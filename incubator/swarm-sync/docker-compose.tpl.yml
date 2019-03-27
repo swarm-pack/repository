@@ -34,6 +34,7 @@ services:
         target: /root/.ssh/id_rsa
         mode: 0600
 {% endif %}
+  stop_grace_period: {{ stop_grace_period }}
 
 volumes:
   {{ volume }}: {}
