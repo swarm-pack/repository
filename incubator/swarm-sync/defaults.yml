@@ -13,6 +13,9 @@ swarm_sync_yml: |
       branch: master
     docker:
       socketPath: /var/run/docker.sock
+    repositories:
+      - name: official
+        url: https://github.com/swarm-pack/repository
 swarm_sync_managed: True
 volume: swarm_sync_storage
 additional_volumes:
