@@ -1,0 +1,10 @@
+pack:
+  name: docker-registry
+  version: 0.1.0
+  home: https://hub.docker.com/_/registry
+  description: The Docker Registry 2.0 implementation for storing and distributing Docker images
+  sources:
+    - https://github.com/docker/distribution-library-image
+  maintainers:
+    - name: Kevin Bennett
+      email: kevbuk@gmail.com

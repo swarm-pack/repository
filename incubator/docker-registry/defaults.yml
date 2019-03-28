@@ -1,0 +1,43 @@
+service_name: docker-registry
+image:
+  repository: registry
+  tag: "2.7"
+  tag_pattern: "semver:^2.7.1"
+
+deploy:
+  mode: replicated
+  replicas: 1
+  placement_constraints: []
+
+traefik:
+  enabled: true
+  hostname: docker.example.com
+  stickiness: true
+
+# config.yml - see https://docs.docker.com/registry/configuration/
+config_yml: |
+  version: 0.1
+  storage:
+    cache:
+      blobdescriptor: inmemory
+    filesystem:
+      rootdirectory: /var/lib/registry
+      maxthreads: 100
+  auth:
+    htpasswd:
+      realm: basic-realm
+      path: /etc/docker/registry/htpasswd
+  http:
+    addr: :5000
+    net: tcp
+    secret: asecretforlocaldevelopment
+    relativeurls: false
+    headers:
+      X-Content-Type-Options: [nosniff]
+    http2:
+      disabled: false
+
+# Bcrypt (2y) hashed passwords in htpasswd format
+# Default: admin / changeme
+htpasswd: |
+  admin:$2y$12$StNRU2NnHxZHfqos9wFHnORaZXsNl5BAKcIguzyS09mFkBxY3OHYy

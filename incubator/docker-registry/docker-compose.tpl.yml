@@ -1,0 +1,37 @@
+---
+version: '3.6'
+
+services:
+  {{ service_name }}:
+
+    image: "{{ image.repository }}:{{ image.tag }}"
+    deploy:
+      mode: {{ deploy.mode }}
+      replicas: {{ deploy.replicas }}
+
+{% if deploy.placement_constraints | length %}
+      placement:
+        constraints:
+{% for p in deploy.placement_constraints %}
+          - "{{ p }}"
+{% endfor %}
+{% endif %}
+      labels:
+{% if swarm-sync.managed %}
+        - "swarm-sync.managed=true"
+{% endif %}
+{% if image.tag_pattern %}
+        - "swarm-sync.image-pattern={{ image.tag_pattern }}"
+{% endif %}
+{% if traefik.enabled %}
+        - "traefik.port=5000"
+        - "traefik.frontend.rule=Host:{{ traefik.hostname }}"
+        - "traefik.backend.loadbalancer.stickiness={{ traefik.stickiness }}"
+{% endif %}
+    secrets:
+      - source: "{{ secret_from_value('config_yml') }}"
+        target: /etc/docker/registry/config.yml
+        mode: 0644
+      - source: "{{ secret_from_value('htpasswd') }}"
+        target: /etc/docker/registry/htpasswd
+        mode: 0644
