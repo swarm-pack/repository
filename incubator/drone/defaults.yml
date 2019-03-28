@@ -1,33 +1,34 @@
 ---
-drone_server:
-  service_name: drone_server
-  image:
-    repository: drone/drone
-    tag: 1.0.0-rc6
-    tag_pattern: semver:>=1.0.0-rc.6
-    auto: true
 
-  deploy:
-    mode: replicated
-    replicas: 1
-    endpoint_mode: dnsrr
-    placement_constraints: []
+service_name: drone
+image:
+  repository: drone/drone
+  tag: "1.0.0"
+  tag_pattern: semver:^1.0.0
+swarm-sync:
+  managed: true
 
-  db_volume_name: drone_database
+config:
+  git_always_auth: "false"
+  gitlab_server: https://gitlab.com
+  gitlab_client_id: changeme
+  gitlab_client_secret: changeme
+  runner_capacity: 1
+  server_host: drone.example.com
+  server_proto: https
+  tls_autocert: "false"
 
-  swarm-sync:
-    managed: true
+data_volume_name: drone_data
 
-  traefik:
-    hostname: drone.example.com
-    stickiness: true
+deploy:
+  mode: replicated
+  replicas: 1
+  placement_constraints: []
 
-  ssl_volume_name: traefik_ssl
-  swarm_sync_managed: true
-  environment:
-    - EXAMPLE=default
-  ports:
-    - "{target: 433, published: 443, protocol: tcp, mode: ingress}"
-    - "{target: 80, published: 80, protocol: tcp, mode: ingress}"
-  enable_web: false
-  mount_docker_sock: true
+mount_docker_sock: true
+
+traefik:
+  hostname: drone.example.com
+  stickiness: true
+
+  

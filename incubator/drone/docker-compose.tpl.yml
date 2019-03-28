@@ -2,38 +2,43 @@
 version: '3.4'
 
 services:
-  {{ drone_server.service_name }}:
-
-    image: "{{ drone_server.image.repository }}:{{ drone_server.image.tag }}"
+  {{ service_name }}:
+    image: "{{ image.repository }}:{{ image.tag }}"
     deploy:
-      mode: {{ drone_server.deploy.mode }}
-      replicas: {{ drone_server.deploy.replicas }}
-      endpoint_mode: {{ drone_server.deploy.endpoint_mode }}
-{% if drone_server.deploy.placement_constraints | length %}
+      mode: {{ deploy.mode }}
+      replicas: {{ deploy.replicas }}
+{% if deploy.placement_constraints | length %}
       placement:
         constraints:
-{% for p in drone_server.deploy.placement_constraints %}
+{% for p in deploy.placement_constraints %}
           - "{{ p }}"
 {% endfor %}
 {% endif %}
       labels:
-{% if drone_server.swarm-sync.managed %}
+{% if swarm-sync.managed %}
         - "swarm-sync.managed=true"
 {% endif %}
-{% if drone_server.image.tag_pattern %}
-        - "swarm-sync.image-pattern={{ drone_server.image.tag_pattern }}"
+{% if image.tag_pattern %}
+        - "swarm-sync.image-pattern={{ image.tag_pattern }}"
 {% endif %}
-        - "traefik.port=8000"
-        - "traefik.frontend.rule=Host:{{ drone_server.traefik.hostname }}"
-        - "traefik.backend.loadbalancer.stickiness={{ drone_server.traefik.stickiness }}"
+        - "traefik.port=80"
+        - "traefik.frontend.rule=Host:{{ traefik.hostname }}"
+        - "traefik.backend.loadbalancer.stickiness={{ traefik.stickiness }}"
 
     environment:
-      DRONE_HOST: "{{ drone_server.drone_host }}"
-{% for key, value in drone_server.env %}
-      {{ key }}: {{ value }}
-{% endfor %}
+      DRONE_GIT_ALWAYS_AUTH: "{{ config.git_always_auth }}"
+      DRONE_GITLAB_SERVER: "{{ config.gitlab_server }}"
+      DRONE_GITLAB_CLIENT_ID: "{{ config.gitlab_client_id }}"
+      DRONE_GITLAB_CLIENT_SECRET: "{{ config.gitlab_client_secret }}"
+      DRONE_RUNNER_CAPACITY: "{{ config.runner_capacity }}"
+      DRONE_SERVER_HOST: "{{ config.server_host }}"
+      DRONE_SERVER_PROTO: "{{ config.server_proto }}"
+      DRONE_TLS_AUTOCERT: "{{ config.tls_autocert }}"
       
     volumes:
-      - {{ drone_server.db_volume_name }}:/var/lib/drone/
+      - {{ data_volume_name }}:/data
+{% if mount_docker_sock %}
+      - /var/run/docker.sock:/var/run/docker.sock
+{% endif %}
 volumes:
-  {{ drone_server.db_volume_name }}: {}
+  {{ data_volume_name }}: {}
