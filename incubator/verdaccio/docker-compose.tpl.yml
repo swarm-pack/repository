@@ -1,0 +1,37 @@
+---
+version: '3.6'
+
+services:
+  {{ service_name }}:
+    image: {{ image.repository }}:{{ image.tag }}
+
+    deploy:
+      mode: {{ deploy.mode }}
+      replicas: {{ deploy.replicas }}
+
+      # Placement constraints
+{% if deploy.placement_constraints | length %}
+      placement:
+        constraints:
+{% for p in deploy.placement_constraints %}
+          - "{{ p }}"
+{% endfor %}
+{% endif %}
+
+      labels:
+        - "swarm-pack.managed=true"
+{% if swarm_sync.managed %}
+        - "swarm-sync.managed=true"
+{% endif %}
+{% if image.tag_pattern %}
+        - "swarm-sync.image-pattern={{ image.tag_pattern }}"
+{% endif %}
+
+        - "traefik.port=4873"
+        - "traefik.frontend.rule=Host:{{ traefik.hostname }}"
+        - "traefik.backend.loadbalancer.stickiness={{ traefik.stickiness }}"
+    secrets:
+      - source: "{{ secret_from_value('config_yml') }}"
+        target: /verdaccio/conf/config.yaml
+      - source: "{{ secret_from_value('htpasswd') }}"
+        target: /verdaccio/conf/htpasswd

@@ -1,0 +1,51 @@
+---
+service_name: verdaccio
+image:
+  repository: verdaccio/verdaccio
+  tag: 3.11.6
+  tag_pattern: ^3.11.6
+
+deploy:
+  mode: replicated
+  replicas: 1
+  placement_constraints: []
+
+swarm_sync:
+  managed: true
+
+traefik:
+  hostname: npm.example.com
+  stickiness: "true"
+
+config_yml: |
+  storage: /verdaccio/storage
+  auth:
+    htpasswd:
+      file: /verdaccio/conf/htpasswd
+      # Disable registration
+      max_users: -1
+
+  # a list of other known repositories we can talk to
+  uplinks:
+    npmjs:
+      url: https://registry.npmjs.org/
+
+  packages:
+    '@*/*':
+      # scoped packages
+      access: $authenticated
+      publish: $authenticated
+      proxy: npmjs
+
+    '**':
+      access: $authenticated
+      publish: $authenticated
+      proxy: npmjs
+
+  # log settings
+  logs:
+    - {type: stdout, format: pretty, level: http}
+
+# admin / changeme
+htpasswd: |
+  admin:$apr1$DnHKrOPp$y/YWjKF90kXMSD54D5G3k.
