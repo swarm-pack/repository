@@ -29,6 +29,10 @@ services:
       - source: "{{ secret_from_value('git_crypt.key', { base64: true }) }}"
         target: /run/secrets/git-crypt-key
 {% endif %}
+{% for s in secrets %}
+      - source: "{{ secret_from_value(s.value, { name: s.name }) }}"
+        target: "{{ s.target }}"
+{% endfor %}
 {% if id_rsa.enabled %}
       - source: "{{ secret_from_value('id_rsa.key') }}"
         target: /root/.ssh/id_rsa
