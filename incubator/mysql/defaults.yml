@@ -1,0 +1,36 @@
+---
+service_name: mysql
+image:
+  repository: mysql
+  tag: 5.7
+  tag_pattern: ^5.7.0
+
+config:
+  root_password: changeme
+  key_buffer_size: 8388608
+  read_buffer_size: 131072
+  sort_buffer_size: 262144
+  tmp_table_size: 16777216
+  max_heap_table_size: 16777216
+  max_allowed_packet: 4194304
+  thread_stack: 262144
+  thread_cache_size: 8
+  performance_schema: ON
+  max_connections: 151
+  query_cache_size: 1048576
+  host_cache_size: -1
+  innodb_buffer_pool_size: 134217728
+  innodb_log_buffer_size: 8388608
+  innodb_ft_cache_size: 8000000
+  innodb_ft_total_cache_size: 640000000
+  innodb_sort_buffer_size: 1048576
+  skip_host_cache: false
+
+data_volume: mysql_data
+
+deploy:
+  mode: replicated
+  replicas: 1
+  placement_constraints: []
+swarm-sync:
+  managed: true

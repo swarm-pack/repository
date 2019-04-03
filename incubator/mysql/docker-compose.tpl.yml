@@ -1,0 +1,58 @@
+---
+version: '3.6'
+
+services:
+  {{ service_name }}:
+    image: {{ image.repository }}:{{ image.tag }}
+    command: 
+      - "mysqld"
+      - "--key-buffer-size={{ config.key_buffer_size }}"
+      - "--read-buffer-size={{ config.read_buffer_size }}"
+      - "--sort-buffer-size={{ config.sort_buffer_size }}"
+      - "--max-heap-table-size={{ config.max_heap_table_size }}"
+      - "--tmp-table-size={{ config.tmp_table_size }}"
+      - "--max-allowed-packet={{ config.max_allowed_packet }}"
+      - "--thread-stack={{ config.thread_stack }}"
+      - "--thread-cache-size={{ config.thread_cache_size }}"
+      - "--performance_schema={{ config.performance_schema }}"
+      - "--max-connections={{ config.max_connections }}"
+      - "--query-cache-size={{ config.query_cache_size }}"
+      - "--innodb-buffer-pool-size={{ config.innodb_buffer_pool_size }}"
+      - "--innodb-log-buffer-size={{ config.innodb_log_buffer_size }}"
+      - "--innodb-ft-cache-size={{ config.innodb_ft_cache_size }}"
+      - "--innodb-ft-total-cache-size={{ config.innodb_ft_total_cache_size }}"
+      - "--innodb-sort-buffer-size={{ config.innodb_sort_buffer_size }}"
+{% if config.skip_host_cache %}
+      - "--skip-host-cache"
+{% endif %}
+
+    volumes:
+      - "{{ data_volume }}:/var/lib/mysql"
+
+    environment:
+      MYSQL_ROOT_PASSWORD: "{{ config.root_password }}"
+
+    deploy:
+      mode: {{ deploy.mode }}
+      replicas: {{ deploy.replicas }}
+
+      # Placement constraints
+{% if deploy.placement_constraints | length %}
+      placement:
+        constraints:
+{% for p in deploy.placement_constraints %}
+          - "{{ p }}"
+{% endfor %}
+{% endif %}
+
+      labels:
+        - "swarm-pack.managed=true"
+{% if swarm-sync.managed %}
+        - "swarm-sync.managed=true"
+{% endif %}
+{% if image.tag_pattern %}
+        - "swarm-sync.image-pattern={{ image.tag_pattern }}"
+{% endif %}
+
+volumes:
+  {{ data_volume }}: {}
