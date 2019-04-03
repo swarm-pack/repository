@@ -9,6 +9,7 @@ swarm-sync:
   managed: true
 
 config:
+  user_filter: [] # Registration is limited to users included in this list, or users that are members of organizations included in this list.
   git_always_auth: "false"
   gitlab_server: https://gitlab.com
   gitlab_client_id: changeme

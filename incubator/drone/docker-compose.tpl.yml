@@ -26,6 +26,9 @@ services:
         - "traefik.backend.loadbalancer.stickiness={{ traefik.stickiness }}"
 
     environment:
+{% if config.user_filter | length %}
+      DRONE_USER_FILTER: "{{ config.user_filter | join(',') }}"
+{% endif %}
       DRONE_GIT_ALWAYS_AUTH: "{{ config.git_always_auth }}"
       DRONE_GITLAB_SERVER: "{{ config.gitlab_server }}"
       DRONE_GITLAB_CLIENT_ID: "{{ config.gitlab_client_id }}"
