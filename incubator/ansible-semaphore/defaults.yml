@@ -3,8 +3,7 @@ service_name: ansible-semaphore
 image:
   repository: ansiblesemaphore/semaphore
   tag: v2.5.1
-  tag_pattern: "semver:^v2.5.1"
-  auto: true
+  tag_pattern: "semver:^2.5.1"
 
 deploy:
   mode: replicated

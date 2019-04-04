@@ -29,15 +29,6 @@ services:
         - "traefik.backend.loadbalancer.stickiness={{ traefik.stickiness }}"
 
     environment:
-      SEMAPHORE_DB_HOST: "{{ config.db_host }}"
-      SEMAPHORE_DB_PORT: "{{ config.db_port }}"
-      SEMAPHORE_DB: "{{ config.db }}"
-      SEMAPHORE_DB_USER: "{{ config.db_user }}"
-      SEMAPHORE_DB_PASS: "{{ config.db_pass }}"
-      SEMAPHORE_ADMIN: "{{ config.admin }}"
-      SEMAPHORE_ADMIN_EMAIL: "{{ config.admin_email }}"
-      SEMAPHORE_ADMIN_NAME: "{{ config.admin_name }}"
-      SEMAPHORE_ADMIN_PASSWORD: "{{ config.admin_password }}"
-{% for key, value in environment %}
-      {{ key }}: {{ value }}
+{% for key, value in config %}
+      SEMAPHORE_{{ key | upper }}: "{{ value }}"
 {% endfor %}
