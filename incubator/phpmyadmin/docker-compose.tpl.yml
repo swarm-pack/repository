@@ -35,4 +35,20 @@ services:
         - "traefik.frontend.rule=Host:{{ traefik.hostname }}"
         - "traefik.backend.loadbalancer.stickiness={{ traefik.stickiness }}"
 
+# https://github.com/swarm-pack/swarm-pack/issues/31
+{% for network, definition in networks %}
+{% if loop.first %}
+    networks:
+{% endif %}
+      - {{ network }}
+{% endfor %}
 
+{% for network, definition in networks %}
+{% if loop.first %}
+networks:
+{% endif %}
+  {{ network }}:
+{% if definition.external %}
+      external: true
+{% endif %}
+{% endfor %}

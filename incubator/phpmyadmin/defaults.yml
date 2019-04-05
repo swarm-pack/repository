@@ -20,3 +20,7 @@ traefik:
   port: 80
   hostname: pma.example.com
   stickiness: True
+
+networks: {}
+  #my_net:
+  #  external: true # optional
