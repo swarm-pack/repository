@@ -31,7 +31,7 @@ services:
         - "swarm-sync.image-pattern={{ image.tag_pattern }}"
 {% endif %}
 
-        - "traefik.port=traefik.port"
+        - "traefik.port={{ traefik.port }}"
         - "traefik.frontend.rule=Host:{{ traefik.hostname }}"
         - "traefik.backend.loadbalancer.stickiness={{ traefik.stickiness }}"
 
