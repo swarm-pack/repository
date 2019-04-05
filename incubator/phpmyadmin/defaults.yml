@@ -1,0 +1,22 @@
+---
+service_name: phpmyadmin
+image:
+  repository: phpmyadmin/phpmyadmin
+  tag: 4.8
+  tag_pattern: ^4.8.4
+
+config:
+  mysql_host: mysql
+  arbitrary: 0
+
+deploy:
+  mode: replicated
+  replicas: 1
+  placement_constraints: []
+swarm-sync:
+  managed: true
+
+traefik:
+  port: 80
+  hostname: pma.example.com
+  stickiness: True

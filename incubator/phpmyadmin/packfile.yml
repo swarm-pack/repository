@@ -1,0 +1,13 @@
+---
+pack:
+  name: phpmyadmin
+  version: 0.1.0
+  home: https://github.com/phpmyadmin
+  description: phpMyAdmin is an mysql administration frontend
+  keywords: []
+  sources:
+    - https://github.com/phpmyadmin/phpmyadmin
+    - https://hub.docker.com/r/phpmyadmin/phpmyadmin/
+  maintainers:
+    - name: Kevin Bennett
+      email: kevbuk@gmail.com
