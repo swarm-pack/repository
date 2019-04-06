@@ -1,0 +1,40 @@
+---
+version: '3.6'
+
+services:
+  {{ service_name }}:
+    image: {{ image.repository }}:{{ image.tag }}
+
+    environment:
+      AGENT_CLUSTER_ADDR: tasks.{{ service_name }}
+
+    ports:
+      - target: 19001
+        published: 19001
+        protocol: tcp
+        mode: host
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+
+    deploy:
+      mode: {{ deploy.mode }}
+      # Placement constraints
+{% if deploy.placement_constraints | length %}
+      placement:
+        constraints:
+{% for p in deploy.placement_constraints %}
+          - "{{ p }}"
+{% endfor %}
+{% endif %}
+
+      labels:
+        - "swarm-pack.managed=true"
+{% if swarm-sync.managed %}
+        - "swarm-sync.managed=true"
+{% endif %}
+{% if image.tag_pattern %}
+        - "swarm-sync.image-pattern={{ image.tag_pattern }}"
+{% endif %}
+

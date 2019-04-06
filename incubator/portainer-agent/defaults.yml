@@ -1,0 +1,13 @@
+---
+service_name: portainer_agent
+image:
+  repository: portainer/agent
+  tag: 1.2.1
+  tag_pattern: ^1.2.1
+
+deploy:
+  mode: global
+  placement_constraints: []
+swarm-sync:
+  managed: true
+
