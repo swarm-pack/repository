@@ -1,0 +1,19 @@
+---
+service_name: percona-mongodb
+image:
+  repository: percona/percona-server-mongodb
+  tag: "4.0.6"
+  tag_pattern: ^4.0.6
+
+data_volume: percona_mysql_data
+
+# https://docs.mongodb.com/manual/reference/configuration-file-settings-command-line-options-mapping/
+mongod_args: []
+
+deploy:
+  mode: replicated
+  replicas: 1
+  placement_constraints: []
+swarm-sync:
+  managed: true
+

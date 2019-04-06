@@ -1,0 +1,38 @@
+---
+version: '3.6'
+
+services:
+  {{ service_name }}:
+    image: {{ image.repository }}:{{ image.tag }}
+    volumes: 
+      - {{ data_volume }}:/data/db
+    command:
+      - mongod
+{% for arg in mongod_args %}
+      - "{{ arg }}"
+{% endfor %}
+
+    deploy:
+      mode: {{ deploy.mode }}
+      replicas: {{ deploy.replicas }}
+
+      # Placement constraints
+{% if deploy.placement_constraints | length %}
+      placement:
+        constraints:
+{% for p in deploy.placement_constraints %}
+          - "{{ p }}"
+{% endfor %}
+{% endif %}
+
+      labels:
+        - "swarm-pack.managed=true"
+{% if swarm-sync.managed %}
+        - "swarm-sync.managed=true"
+{% endif %}
+{% if image.tag_pattern %}
+        - "swarm-sync.image-pattern={{ image.tag_pattern }}"
+{% endif %}
+
+volumes:
+  {{ data_volume }}:

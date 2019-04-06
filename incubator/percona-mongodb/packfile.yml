@@ -1,0 +1,17 @@
+---
+pack:
+  name: percona-mongodb
+  version: 0.1.0
+  home: https://github.com/percona/percona-server-mongodb
+  description: Percona distribution of MongoDB NoSQL database server
+  keywords:
+    - mongodb
+    - percona
+    - database
+    - nosql
+  sources:
+    - https://github.com/percona/percona-server-mongodb
+    - https://github.com/mongodb/mongo
+  maintainers:
+    - name: Kevin Bennett
+      email: kevbuk@gmail.com
