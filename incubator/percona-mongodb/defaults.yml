@@ -16,4 +16,3 @@ deploy:
   placement_constraints: []
 swarm-sync:
   managed: true
-
