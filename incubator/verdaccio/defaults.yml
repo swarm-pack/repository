@@ -49,3 +49,5 @@ config_yml: |
 # admin / changeme
 htpasswd: |
   admin:$apr1$DnHKrOPp$y/YWjKF90kXMSD54D5G3k.
+
+secrets: []

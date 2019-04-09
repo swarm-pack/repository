@@ -1,7 +1,7 @@
 ---
 pack:
   name: verdaccio
-  version: 0.1.0
+  version: 0.1.1
   #home: URL for Pack homepage, e.g. github URL
   description: A lightweight private npm proxy registry
   keywords: []

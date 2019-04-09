@@ -35,3 +35,7 @@ services:
         target: /verdaccio/conf/config.yaml
       - source: "{{ secret_from_value('htpasswd') }}"
         target: /verdaccio/conf/htpasswd
+{% for s in secrets %}
+      - source: "{{ secret(s.name, s.value) }}"
+        target: "{{ s.target }}"
+{% endfor %}
