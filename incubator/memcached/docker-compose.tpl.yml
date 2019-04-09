@@ -1,0 +1,42 @@
+---
+version: '3.6'
+
+services:
+  {{ service_name }}:
+    image: "{{ image.repository }}:{{ image.tag }}"
+
+    command:
+      - "memcached"
+      - "-m {{ config.maxItemMemory }}"
+      {%- if config.extendedOptions %}
+      - "-o"
+      - {{ config.extendedOptions }}
+      {%- endif %}
+      {%- if config.verbosity %}
+      - "-{{ config.verbosity }}"
+      {%- endif %}
+
+    # Deploy
+    deploy:
+      {{ deploy | dumpyml(6)}}
+      labels:
+        - "swarm-sync.managed={{ swarm_sync.managed }}"
+        {% if image.tag_pattern %}- "swarm-sync.image-pattern={{ image.tag_pattern }}"{% endif %}
+
+    # /Deploy
+
+    {%- if logging | length %}
+      {{logging}}: {{ logging | dump }}
+    {%- endif %}
+
+    networks:
+    {%- for net, def in networks %}
+      - {{ net }}
+    {%- endfor %}
+
+    # volumes:
+
+## Other assets (not-service)
+networks: 
+  {{ networks | dumpyml(2) }}
+# volumes:

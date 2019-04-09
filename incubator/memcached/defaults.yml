@@ -1,0 +1,26 @@
+---
+service_name: memcached
+image:
+  repository: memcached
+  tag: 1.5.12-alpine
+  tag_pattern: literal:1.5.12-alpine
+
+## https://github.com/memcached/memcached/wiki/ConfiguringServer#commandline-arguments
+config:
+  maxItemMemory: 64
+  verbosity: v
+  extendedOptions: modern
+
+# Deploy allows all docker-compose options, except for labels
+deploy:
+  mode: replicated
+  replicas: 1
+
+swarm_sync:
+  managed: true
+
+# Accepts same options/format as docker-compose
+logging:
+
+networks:
+  default:
