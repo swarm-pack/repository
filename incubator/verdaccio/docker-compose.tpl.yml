@@ -5,6 +5,8 @@ services:
   {{ service_name }}:
     image: {{ image.repository }}:{{ image.tag }}
 
+    {{ dumpblock_if_set({value: environment, indent: 4, root: 'environment'}) }}
+
     deploy:
       mode: {{ deploy.mode }}
       replicas: {{ deploy.replicas }}
