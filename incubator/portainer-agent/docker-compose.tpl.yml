@@ -9,8 +9,8 @@ services:
       AGENT_CLUSTER_ADDR: tasks.{{ service_name }}
 
     ports:
-      - target: 19001
-        published: 19001
+      - target: 9001
+        published: {{ host_port }}
         protocol: tcp
         mode: host
 
