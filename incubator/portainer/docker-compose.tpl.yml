@@ -4,6 +4,10 @@ version: '3.3'
 services:
   {{ service_name }}:
     image: "{{ image.repository }}:{{ image.tag }}"
+
+    environment:
+      AGENT_SECRET: {{ agent_secret }}
+
     deploy:
       labels:
         - "swarm-sync.managed={{ swarm_sync_managed }}"

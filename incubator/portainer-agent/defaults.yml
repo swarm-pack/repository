@@ -12,3 +12,4 @@ swarm-sync:
   managed: true
 
 host_port: 9001
+agent_secret: changeme

@@ -7,6 +7,7 @@ services:
 
     environment:
       AGENT_CLUSTER_ADDR: tasks.{{ service_name }}
+      AGENT_SECRET: {{ agent_secret }}
 
     ports:
       - target: 9001

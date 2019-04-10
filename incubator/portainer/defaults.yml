@@ -15,3 +15,5 @@ traefik:
   port: 3000
   hostname: portainer.example.com
   stickiness: true
+
+agent_secret: changeme
