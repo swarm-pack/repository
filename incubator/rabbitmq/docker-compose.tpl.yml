@@ -1,0 +1,37 @@
+---
+version: '3.6'
+
+services:
+  {{ service_name }}:
+    image: "{{ image.repository }}:{{ image.tag }}"
+
+    environment:
+      RABBITMQ_VM_MEMORY_HIGH_WATERMARK: {{ config.vm_memory_high_watermark }}
+      RABBITMQ_ERLANG_COOKIE: {{ config.erlang_cookie }}
+
+    # Deploy
+    deploy:
+      {{ deploy | dumpyml(6)}}
+      endpoint_mode: dnsrr
+      labels:
+        - "swarm-sync.managed={{ swarm_sync.managed }}"
+        {% if image.tag_pattern %}- "swarm-sync.image-pattern={{ image.tag_pattern }}"{% endif %}
+    # /Deploy
+
+    # Logging
+    {{ dumpblock_if_set({value: logging, indent: 4, root: 'logging'}) }}
+
+    networks:
+    {%- for net, def in networks %}
+      - {{ net }}
+    {%- endfor %}
+
+    secrets:
+      - source: "{{ secret_from_value('rabbitmq_conf') }}"
+        target: /etc/rabbitmq/rabbitmq.conf
+
+    # volumes:
+
+## Other assets (not-service)
+networks: {{ networks | dump }}
+# volumes:
