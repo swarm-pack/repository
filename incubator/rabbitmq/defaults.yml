@@ -10,6 +10,8 @@ config:
   erlang_cookie: "changeme"
 
 rabbitmq_conf: |
+  default_user = admin
+  default_pass = changeme
   cluster_formation.peer_discovery_backend = rabbit_peer_discovery_dns
   cluster_formation.dns.hostname = rabbitmq
 
