@@ -6,7 +6,6 @@ image:
   tag_pattern: ^3.7.13
 
 config:
-  vm_memory_high_watermark: "40%"
   erlang_cookie: "changeme"
 
 rabbitmq_conf: |

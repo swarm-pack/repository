@@ -6,7 +6,6 @@ services:
     image: "{{ image.repository }}:{{ image.tag }}"
 
     environment:
-      RABBITMQ_VM_MEMORY_HIGH_WATERMARK: {{ config.vm_memory_high_watermark }}
       RABBITMQ_ERLANG_COOKIE: {{ config.erlang_cookie }}
 
     # Deploy
