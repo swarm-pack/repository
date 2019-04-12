@@ -2,8 +2,8 @@
 service_name: rabbitmq
 image:
   repository: rabbitmq
-  tag: 3.7.13
-  tag_pattern: ^3.7.13
+  tag: 3-management
+  tag_pattern: literal:3-management
 
 config:
   erlang_cookie: "changeme"
@@ -12,7 +12,7 @@ rabbitmq_conf: |
   default_user = admin
   default_pass = changeme
   cluster_formation.peer_discovery_backend = rabbit_peer_discovery_dns
-  cluster_formation.dns.hostname = rabbitmq
+  cluster_formation.dns.hostname = tasks.rabbit_mq
 
 # Deploy allows all docker-compose options, except for labels
 deploy:
