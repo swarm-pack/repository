@@ -18,6 +18,10 @@ rabbitmq_conf: |
 deploy:
   mode: replicated
   replicas: 2
+  
+traefik:
+  hostname: rabbit.example.com
+  stickiness: true
 
 swarm_sync:
   managed: true
