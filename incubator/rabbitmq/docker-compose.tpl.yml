@@ -5,11 +5,8 @@ services:
   {{ service_name }}:
     image: "{{ image.repository }}:{{ image.tag }}"
 
-    hostname: "{% raw %}{{.Task.ID}}{% endraw %}"
-    
     environment:
       RABBITMQ_ERLANG_COOKIE: {{ config.erlang_cookie }}
-      RABBITMQ_NODENAME: "{% raw %}rabbit-replica@{{.Task.ID}}{% endraw %}"
 
     # Deploy
     deploy:

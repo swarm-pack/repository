@@ -17,7 +17,7 @@ rabbitmq_conf: |
 # Deploy allows all docker-compose options, except for labels
 deploy:
   mode: replicated
-  replicas: 1
+  replicas: 2
 
 swarm_sync:
   managed: true
