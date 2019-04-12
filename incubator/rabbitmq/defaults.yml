@@ -12,7 +12,7 @@ rabbitmq_conf: |
   default_user = admin
   default_pass = changeme
   cluster_formation.peer_discovery_backend = rabbit_peer_discovery_dns
-  cluster_formation.dns.hostname = tasks.rabbit_mq
+  cluster_formation.dns.hostname = tasks.rabbitmq
 
 # Deploy allows all docker-compose options, except for labels
 deploy:
