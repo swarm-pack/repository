@@ -1,0 +1,27 @@
+---
+service_name: mcrouter
+image:
+  repository: kevbuk/mcrouter-swarm
+  tag: 0.1.0
+  tag_pattern: ^0.1.0
+
+# Deploy allows all docker-compose options, except for labels
+deploy:
+  mode: replicated
+  replicas: 1
+
+config:
+  pools:
+    nonprod: 
+      hostname: tasks.nonprod_memcached
+      port: 11211
+  route: PoolRoute|nonprod
+
+swarm_sync:
+  managed: true
+
+# Accepts same options/format as docker-compose
+logging:
+
+networks:
+  default:

@@ -1,0 +1,16 @@
+---
+pack:
+  name: mcrouter
+  version: 0.1.0
+  home: https://github.com/kevb/docker-swarm-mcrouter
+  description: Mcrouter with docker swarm discovery
+  keywords:
+    - memcached
+    - mcrouter
+    - cache
+  sources:
+    - https://github.com/kevb/docker-swarm-mcrouter
+    - https://github.com/facebook/mcrouter
+  maintainers:
+    - name: Kevin Bennett
+      email: kevbuk@gmail.com
