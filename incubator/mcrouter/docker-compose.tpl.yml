@@ -11,6 +11,7 @@ services:
       MCROUTER_PORT_{{ pool }}: "{{ pool_def.port }}"
     {% endfor %}
       MCROUTER_ROUTE: "{{ config.route }}"
+      MCROUTER_PORT: "{{ config.port }}"
 
     # Deploy
     deploy:
