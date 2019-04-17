@@ -6,9 +6,9 @@ services:
     image: "{{ image.repository }}:{{ image.tag }}"
 
     environment:
-    {% for pool, pool_def in config.pools %}
-      MCROUTER_POOL_{{ pool }}: "{{ pool_def.hostname }}"
-      MCROUTER_PORT_{{ pool }}: "{{ pool_def.port }}"
+    {% for pool in config.pools %}
+      MCROUTER_POOL_{{ pool.name }}: "{{ pool.hostname }}"
+      MCROUTER_PORT_{{ pool.name }}: "{{ pool.port }}"
     {% endfor %}
       MCROUTER_ROUTE: "{{ config.route }}"
       MCROUTER_PORT: "{{ config.port }}"
