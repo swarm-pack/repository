@@ -12,10 +12,10 @@ deploy:
 
 config:
   pools:
-    nonprod: 
+    default: 
       hostname: tasks.memcached
       port: 11211
-  route: PoolRoute|nonprod
+  default: PoolRoute|nonprod
 
 swarm_sync:
   managed: true
