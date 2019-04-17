@@ -7,14 +7,9 @@ services:
 
     command:
       - "memcached"
-      - "-m {{ config.maxItemMemory }}"
-      {%- if config.extendedOptions %}
-      - "-o"
-      - {{ config.extendedOptions }}
-      {%- endif %}
-      {%- if config.verbosity %}
-      - "-{{ config.verbosity }}"
-      {%- endif %}
+    {% for arg in args %}
+      - "{{ arg }}"
+    {%- endfor %}
 
     # Deploy
     deploy:

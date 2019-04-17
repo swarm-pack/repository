@@ -6,10 +6,8 @@ image:
   tag_pattern: literal:1.5.12-alpine
 
 ## https://github.com/memcached/memcached/wiki/ConfiguringServer#commandline-arguments
-config:
-  maxItemMemory: 64
-  verbosity: v
-  extendedOptions: modern
+args: []
+  # - "-m 64"
 
 # Deploy allows all docker-compose options, except for labels
 deploy:

@@ -1,9 +1,14 @@
 ---
 pack:
   name: memcached
-  version: 0.1.0
-  #home: URL for Pack homepage, e.g. github URL
+  version: 0.1.1
+  home: https://memcached.org/
   description: Free & open source, high-performance, distributed memory object caching
-  keywords: []
-  sources: []
-  maintainers: []
+  keywords:
+    - memcached
+    - cache
+  sources:
+    - https://hub.docker.com/_/memcached
+  maintainers:
+    - name: Kevin Bennett
+      email: kevbuk@gmail.com
