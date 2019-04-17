@@ -2,8 +2,8 @@
 service_name: mcrouter
 image:
   repository: kevbuk/mcrouter-swarm
-  tag: v0.40.0
-  tag_pattern: semver:^0.40.0
+  tag: v0.40.0-2
+  tag_pattern: semver:^0.40.0-2
 
 # Deploy allows all docker-compose options, except for labels
 deploy:
