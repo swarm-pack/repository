@@ -5,15 +5,19 @@ image:
   tag: latest
   tag_pattern: latest
   auto: true
-deploy_mode: global
 ssl_volume_name: traefik_ssl
 swarm_sync_managed: true
+
 environment: {}
+
 ports:
-  - "{target: 433, published: 443, protocol: tcp, mode: ingress}"
-  - "{target: 80, published: 80, protocol: tcp, mode: ingress}"
+  - { target: 433, published: 443, protocol: tcp, mode: ingress }
+  - { target: 80, published: 80, protocol: tcp, mode: ingress }
+
 enable_web: false
+
 mount_docker_sock: true
+
 args:
   - "--web"
   - "--defaultentrypoints=http,https"
@@ -21,3 +25,9 @@ args:
   - "--entrypoints=Name:https Address::443 TLS"
   - "--docker.endpoint=unix:///var/run/docker.sock"
   - "--docker.exposedbydefault=true"
+
+deploy:
+  mode: global
+  placement:
+    constraints:
+      - node.role == manager
