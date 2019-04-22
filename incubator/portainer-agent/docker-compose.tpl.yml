@@ -29,19 +29,20 @@ services:
           - "{{ p }}"
 {% endfor %}
 {% endif %}
+      labels:
+      {% if swarm-sync.managed %}
+        - "swarm-sync.managed=true"
+      {%- endif %}
+      {% if image.tag_pattern %}
+        - "swarm-sync.image-pattern={{ image.tag_pattern }}"
+      {%- endif %}
+
+    #/ deploy 
 
     networks:
     {%- for net, def in networks %}
       - {{ net }}
     {%- endfor %}
-
-    labels:
-    {% if swarm-sync.managed %}
-      - "swarm-sync.managed=true"
-    {%- endif %}
-    {% if image.tag_pattern %}
-      - "swarm-sync.image-pattern={{ image.tag_pattern }}"
-    {%- endif %}
 
 ## Other assets (not-service)
 networks: {{ networks | dump }}
