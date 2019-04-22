@@ -1,8 +1,8 @@
 ---
 image:
   repository: swarmpack/swarm-sync
-  tag: "v0.0.38"
-  tag_pattern: "semver:^0.0.38"
+  tag: "v0.1.39"
+  tag_pattern: "semver:^0.1.39"
 stop_grace_period: 2m
 swarm_sync_yml: |
   swarm-sync:
