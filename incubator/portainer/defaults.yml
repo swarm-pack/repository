@@ -17,3 +17,8 @@ traefik:
   stickiness: true
 
 agent_secret: changeme
+
+networks:
+  default:
+    driver: overlay
+    attachable: true

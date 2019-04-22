@@ -22,11 +22,19 @@ services:
         constraints:
           - node.role == manager
 {% endif %}
+
+    networks:
+    {%- for net, def in networks %}
+      - {{ net }}
+    {%- endfor %}
+
     volumes:
       - {{ portainer_data_volume }}:/data
-{% if mount_docker_sock %}
+    {% if mount_docker_sock %}
       - /var/run/docker.sock:/var/run/docker.sock
-{% endif %}
+    {%- endif %}
 
+## Other assets (not-service)
+networks: {{ networks | dump }}
 volumes:
   {{ portainer_data_volume }}: {}
