@@ -36,7 +36,6 @@ services:
     {%- endfor %}
 
     labels:
-      - "swarm-pack.managed=true"
     {% if swarm-sync.managed %}
       - "swarm-sync.managed=true"
     {%- endif %}
