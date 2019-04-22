@@ -13,3 +13,8 @@ swarm-sync:
 
 host_port: 9001
 agent_secret: changeme
+
+networks:
+  default:
+    driver: overlay
+    attachable: true

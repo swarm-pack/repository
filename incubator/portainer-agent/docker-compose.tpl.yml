@@ -30,6 +30,11 @@ services:
 {% endfor %}
 {% endif %}
 
+    networks:
+    {%- for net, def in networks %}
+      - {{ net }}
+    {%- endfor %}
+
       labels:
         - "swarm-pack.managed=true"
 {% if swarm-sync.managed %}
@@ -39,3 +44,5 @@ services:
         - "swarm-sync.image-pattern={{ image.tag_pattern }}"
 {% endif %}
 
+## Other assets (not-service)
+networks: {{ networks | dump }}
