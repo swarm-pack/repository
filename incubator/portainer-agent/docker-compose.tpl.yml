@@ -22,13 +22,13 @@ services:
     deploy:
       mode: {{ deploy.mode }}
       # Placement constraints
-{% if deploy.placement_constraints | length %}
+  {% if deploy.placement_constraints | length %}
       placement:
         constraints:
-{% for p in deploy.placement_constraints %}
+  {% for p in deploy.placement_constraints %}
           - "{{ p }}"
-{% endfor %}
-{% endif %}
+  {% endfor %}
+  {% endif %}
       labels:
       {% if swarm-sync.managed %}
         - "swarm-sync.managed=true"
