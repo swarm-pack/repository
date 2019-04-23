@@ -8,9 +8,7 @@ services:
     # Volumes
     volumes:
       - {{ volume }}:/run/swarm-sync
-  {% for v in additional_volumes %}
-      - {{ v }}
-  {%- endfor %}
+      {{ dumpblock_if_set({ value: additional_volumes, indent: 6 }) }}
     # /Volumes
 
     # Deploy
@@ -46,9 +44,20 @@ services:
 
     stop_grace_period: {{ stop_grace_period }}
 
+    # Logging
     {%- if logging | length %}
       {{logging}}: {{ logging | dump }}
     {%- endif %}
+    # /Logging
 
+    # Networks
+    networks:
+    {%- for net, def in networks %}
+      - {{ net }}
+    {%- endfor %}
+    # /Networks
+
+## Other assets (not-service)
+networks: {{ networks | dump }}
 volumes:
   {{ volume }}: {}

@@ -4,6 +4,9 @@ image:
   tag: "v0.1.39"
   tag_pattern: "semver:^0.1.39"
 stop_grace_period: 2m
+swarm_sync_managed: True
+
+# Swarm-sync.yml config file
 swarm_sync_yml: |
   swarm-sync:
     stacks:
@@ -17,25 +20,35 @@ swarm_sync_yml: |
     repositories:
       - name: official
         url: https://github.com/swarm-pack/repository
-swarm_sync_managed: True
-volume: swarm_sync_storage
-additional_volumes:
-  - "/var/run/docker.sock:/var/run/docker.sock"
 
+# Optionally enable git-crypt and add a key
 git_crypt:
   enabled: false
   key: 
 
+# Optionally pass a value for ~/.ssh/id_rsa file for git authentication
 id_rsa: 
   enabled: false
   key: 
 
+# Same syntax as docker-compose, but do not add labels here
 deploy:
   placement:
     constraints:
       - "node.role == manager"
 
+# Volume name for swarm-sync persistence
+volume: swarm_sync_storage
+
+# Additional bind mounts or external volumes to mount
+additional_volumes:
+  - "/var/run/docker.sock:/var/run/docker.sock"
+
+# Networks to attach service to (use docker-compose long format)
+networks:
+  default:
+    driver: overlay
+    attachable: true
+
+# Additional secrets to mount ([{name, value, target}])
 secrets: []
-#  - name: 
-#    value: 
-#    target: 
