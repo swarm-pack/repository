@@ -9,7 +9,7 @@ deploy:
   mode: global
   placement_constraints: []
 
-swarm-sync:
+swarm_sync:
   managed: true
 
 host_port: 9001

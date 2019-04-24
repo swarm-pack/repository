@@ -19,25 +19,17 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
 
+    # Deploy
     deploy:
-      mode: {{ deploy.mode }}
-      # Placement constraints
-  {% if deploy.placement_constraints | length %}
-      placement:
-        constraints:
-  {% for p in deploy.placement_constraints %}
-          - "{{ p }}"
-  {% endfor %}
-  {% endif %}
+      {{ deploy | dumpyml(6)}}
       labels:
-      {% if swarm-sync.managed %}
+      {% if swarm_sync.managed %}
         - "swarm-sync.managed=true"
       {%- endif %}
       {% if image.tag_pattern %}
         - "swarm-sync.image-pattern={{ image.tag_pattern }}"
       {%- endif %}
-
-    #/ deploy 
+    # /Deploy
 
     networks:
     {%- for net, def in networks %}
