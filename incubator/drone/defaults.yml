@@ -3,8 +3,8 @@
 service_name: drone
 image:
   repository: drone/drone
-  tag: "1.0.0"
-  tag_pattern: semver:^1.0.0
+  tag: "1.1.0"
+  tag_pattern: semver:^1.1.0
 swarm-sync:
   managed: true
 
