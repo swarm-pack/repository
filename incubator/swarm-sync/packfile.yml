@@ -1,6 +1,6 @@
 pack:
   name: swarm-sync
-  version: 0.1.39
+  version: 0.1.41
   home: https://github.com/swarm-pack/swarm-sync
   description: GitOps for Docker Swarm
   keywords:
