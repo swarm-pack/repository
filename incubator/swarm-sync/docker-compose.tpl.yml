@@ -11,6 +11,9 @@ services:
       {{ dumpblock_if_set({ value: additional_volumes, indent: 6 }) }}
     # /Volumes
 
+    environment:
+      SWARM_SYNC_LOGLEVEL: {{ loglevel }}
+
     # Deploy
     deploy:
       {{ deploy | dumpyml(6)}}
