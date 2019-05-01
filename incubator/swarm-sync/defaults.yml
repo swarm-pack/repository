@@ -41,8 +41,6 @@ deploy:
       - "node.role == manager"
   update_config:
     order: stop-first
-  rollback_config:
-    order: stop-first
 
 # Volume name for swarm-sync persistence
 volume: swarm_sync_storage
