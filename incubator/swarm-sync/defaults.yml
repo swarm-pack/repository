@@ -1,9 +1,9 @@
 ---
 image:
   repository: swarmpack/swarm-sync
-  tag: "v0.1.43"
-  tag_pattern: "semver:^0.1.43"
-stop_grace_period: 2m
+  tag: "v0.1.45"
+  tag_pattern: "semver:^0.1.45"
+stop_grace_period: 10m
 swarm_sync_managed: True
 
 # Swarm-sync.yml config file
@@ -39,6 +39,10 @@ deploy:
   placement:
     constraints:
       - "node.role == manager"
+  update_config:
+    order: stop-first
+  rollback_config:
+    order: stop-first
 
 # Volume name for swarm-sync persistence
 volume: swarm_sync_storage
