@@ -3,7 +3,7 @@ service_name: docker-registry-ui
 image:
   repository: joxit/docker-registry-ui
   tag: "1.2"
-  tag_pattern: "semver:1.2"
+  tag_pattern: "literal:1.2"
 swarm_sync_managed: True
 
 config:
