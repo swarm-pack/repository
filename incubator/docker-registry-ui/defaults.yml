@@ -1,0 +1,37 @@
+---
+service_name: docker-registry-ui
+image:
+  repository: joxit/docker-registry-ui:latest
+  tag: "1.2"
+  tag_pattern: "semver:1.2"
+swarm_sync_managed: True
+
+config:
+  # The static URL to use (You will need CORS configuration). Example: http://127.0.0.1:5000. (Required)
+  url: http://127.0.0.1:5000
+  # your docker registry URL to contact (CORS configuration is not needed). Example: http://my-docker-container:5000. (Can't be used with URL, since 0.3.2).
+  registry_url: http://my-docker-container:5000
+  # if this variable is empty or false, delete feature is deactivated. It is activated otherwise.
+  delete_images: false
+  # Set a custom title for your user interface when using REGISTRY_URL (since 0.3.4).
+  registry_title: My Registry
+  # Set a custom url for the docker pull command, this is useful when you use REGISTRY_URL and your registry is on a different host (since 1.1.0).
+  pull_url:
+
+traefik:
+  hostname: docker-registry-ui.example.com
+  stickiness: true
+
+# Same syntax as docker-compose, but do not add labels here
+deploy:
+  placement:
+    constraints:
+      - "node.role == manager"
+  update_config:
+    order: stop-first
+
+# Networks to attach service to (use docker-compose long format)
+networks:
+  default:
+    driver: overlay
+    attachable: true

@@ -1,0 +1,13 @@
+pack:
+  name: docker-registry-ui
+  version: 0.1.0
+  home: https://github.com/Joxit/docker-registry-ui
+  description: Docker registry v2 web User Interface
+  keywords:
+    - docker
+    - registry
+  sources:
+    - https://github.com/Joxit/docker-registry-ui
+  maintainers:
+    - name: Kevin Bennett
+      email: kevbuk@gmail.com
