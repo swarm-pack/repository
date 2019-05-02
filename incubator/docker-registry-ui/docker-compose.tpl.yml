@@ -6,11 +6,11 @@ services:
     image: "{{ image.repository }}:{{ image.tag }}"
 
     environment:
-      URL: {{ config.url }}
-      REGISTRY_URL: {{ config.registry_url }}
-      DELETE_IMAGES: {{ config.delete_images }}
-      REGISTRY_TITLE: {{ config.registry_title }}
-      PULL_URL: {{ config.pull_url }}
+      URL: "{{ config.url }}"
+      REGISTRY_URL: "{{ config.registry_url }}"
+      DELETE_IMAGES: "{{ config.delete_images }}"
+      REGISTRY_TITLE: "{{ config.registry_title }}"
+      {% if config.pull_url %}PULL_URL: "{{ config.pull_url }}"{% endif %}
 
     # Deploy
     deploy:
