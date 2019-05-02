@@ -35,3 +35,25 @@ services:
       - source: "{{ secret_from_value('htpasswd') }}"
         target: /etc/docker/registry/htpasswd
         mode: 0644
+
+
+{% if enable_garbage_collection %}
+  {{ service_name }}_gc:
+    image: "{{ image.repository }}:{{ image.tag }}"
+    command: /bin/registry garbage-collect /etc/docker/registry/config.yml
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 24h
+      labels:
+    {% if swarm-sync.managed %}
+        - "swarm-sync.managed=true"
+    {%- endif %}
+    {% if image.tag_pattern %}
+        - "swarm-sync.image-pattern={{ image.tag_pattern }}"
+    {%- endif %}
+    secrets:
+      - source: "{{ secret_from_value('config_yml') }}"
+        target: /etc/docker/registry/config.yml
+        mode: 0644
+{% endif %}

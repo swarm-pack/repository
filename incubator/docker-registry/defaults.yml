@@ -37,6 +37,9 @@ config_yml: |
     http2:
       disabled: false
 
+# Adds an extra service which runs garbage collection every 24 hours
+enable_garbage_collection: false
+
 # Bcrypt (2y) hashed passwords in htpasswd format
 # Default: admin / changeme
 htpasswd: |
