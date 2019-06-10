@@ -1,10 +1,9 @@
 service_name: rocketchat
 image:
   repository: rocketchat/rocket.chat
-  tag: "0.74.2"
-  tag_pattern: "semver:^0.74.2"
-port: 3000
-uploads_volume_name: rocketchat-uploads
+  tag: "1.1.1"
+  tag_pattern: "semver:^1.1.1"
+uploads_volume_name: rocketchatat-uploads
 
 deploy:
   mode: replicated
@@ -18,10 +17,11 @@ traefik:
 
 # config
 config:
+  port: 3000
   root_url: https://chat.example.com
   mail_url: 
   admin_username: admin
   admin_email: admin@example.com
   admin_pass: changeme
-  mongo_url: mongodb://mongo
-  mongo_oplog_url: 
+  mongo_url: mongodb://mongo/rocketchat
+  mongo_oplog_url: mongodb://mongo/local

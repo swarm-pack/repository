@@ -1,5 +1,5 @@
 ---
-version: '3.4'
+version: '3.6'
 
 services:
   {{ service_name }}:
@@ -7,7 +7,7 @@ services:
     image: "{{ image.repository }}:{{ image.tag }}"
 
     environment:
-      PORT: {{ port }}
+      PORT: {{ config.port }}
       ROOT_URL: {{ config.root_url }}
       MAIL_URL: {{ config.mail_url }}
       ADMIN_USERNAME: {{ config.admin_username }}
@@ -16,24 +16,32 @@ services:
       MONGO_URL: {{ config.mongo_url }}
       MONGO_OPLOG_URL: {{ config.mongo_oplog_url }}
 
+    # Deploy
     deploy:
-      mode: {{ deploy.mode }}
-      replicas: {{ deploy.replicas }}
+      {{ deploy | dumpyml(6)}}
       labels:
-{% if swarm-sync.managed %}
-        - "swarm-sync.managed=true"
-{% endif %}
-{% if image.tag_pattern %}
-        - "swarm-sync.image-pattern={{ image.tag_pattern }}"
-{% endif %}
+        - "swarm-sync.managed={{ swarm_sync.managed }}"
+        {% if image.tag_pattern %}- "swarm-sync.image-pattern={{ image.tag_pattern }}"{% endif %}
         - "traefik.port={{ port }}"
         - "traefik.frontend.rule=Host:{{ traefik.hostname }}"
+    # /Deploy        
 
     ports:
       - {{ port }}
 
+    # Logging
+    {{ dumpblock_if_set({value: logging, indent: 4, root: 'logging'}) }}
+
+    networks:
+    {%- for net, def in networks %}
+      - {{ net }}
+    {%- endfor %}
+
     volumes:
       - {{ uploads_volume_name }}:/app/uploads
+
+## Other assets (not-service)
+networks: {{ networks | dump }}
 
 volumes:
   {{ uploads_volume_name }}: {}
