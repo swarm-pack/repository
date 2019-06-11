@@ -9,7 +9,7 @@ services:
     environment:
       PORT: {{ config.port }}
       ROOT_URL: {{ config.root_url }}
-      MAIL_URL: {{ config.mail_url }}
+      {% if config.mail_url %}MAIL_URL: {{ config.mail_url }}{% endif %}
       ADMIN_USERNAME: {{ config.admin_username }}
       ADMIN_EMAIL: {{ config.admin_email }}
       ADMIN_PASS: {{ config.admin_password }}
@@ -27,7 +27,7 @@ services:
     # /Deploy        
 
     ports:
-      - {{ port }}
+      - {{ config.port }}
 
     # Logging
     {{ dumpblock_if_set({value: logging, indent: 4, root: 'logging'}) }}
