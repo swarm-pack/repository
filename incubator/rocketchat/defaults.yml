@@ -25,3 +25,9 @@ config:
   admin_pass: changeme
   mongo_url: mongodb://mongo/rocketchat
   mongo_oplog_url: mongodb://mongo/local
+
+# Accepts same options/format as docker-compose
+logging:
+
+networks:
+  default:
