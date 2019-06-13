@@ -14,6 +14,8 @@ swarm-sync:
 
 traefik:
   hostname: chat.example.com
+  stickiness: True
+  network:
 
 # config
 config:

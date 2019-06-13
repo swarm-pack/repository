@@ -24,10 +24,9 @@ services:
         {% if image.tag_pattern %}- "swarm-sync.image-pattern={{ image.tag_pattern }}"{% endif %}
         - "traefik.port={{ config.port }}"
         - "traefik.frontend.rule=Host:{{ traefik.hostname }}"
-    # /Deploy        
-
-    ports:
-      - {{ config.port }}
+        - "traefik.backend.loadbalancer.stickiness={{ traefik.stickiness }}"
+        {% if traefik.network %}- "traefik.docker.network={{ traefik.network }}"{% endif %}
+    # /Deploy
 
     # Logging
     {{ dumpblock_if_set({value: logging, indent: 4, root: 'logging'}) }}

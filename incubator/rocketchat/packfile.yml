@@ -1,6 +1,6 @@
 pack:
   name: rocketchat
-  version: 0.0.1
+  version: 1.1.1
   home: https://rocket.chat/
   description: Prepare to take off with the ultimate chat platform, experience the next level of team communications
   keywords:
