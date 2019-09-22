@@ -1,0 +1,14 @@
+{
+  "name": "swarm-pack-repository-build",
+  "version": "1.0.0",
+  "description": "Swarm-Pack Repository Build Scripts",
+  "main": "build.js",
+  "dependencies": {
+    "execa": "^2.0.4",
+    "fs-extra": "^8.1.0",
+    "klaw": "^3.0.0"
+  },
+  "scripts": {
+    "publish": "./circleci/build_publish.js"
+  }
+}
