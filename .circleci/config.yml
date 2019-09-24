@@ -5,6 +5,13 @@ jobs:
       - image: node:12
     steps:
       - checkout
+      - run:
+        - command: |
+          cd /tmp
+          wget https://github.com/swarm-pack/swarm-pack/releases/download/v2.0.0-RC4/swarm-pack-linux-x64-v2.0.0-RC4.tgz
+          tar -zxvf swarm-pack-linux-x64-v2.0.0-RC4.tgz
+          mv swarm-pack /usr/local/bin/
+
       - run: cd .circleci && npm i
       - run: node .circleci/build_publish.js
 
