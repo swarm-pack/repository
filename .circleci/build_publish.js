@@ -62,8 +62,8 @@ async function listPackBundlesInBucket(bucket) {
   // Each target, e.g. 'incubator' is a unique directory with it's own S3 bucket etc
   for (let [target, { bucket, url }] of Object.entries(targets)) {
 
-    // Assumes CWD is ./.circleci in repo
-    const targetDir = path.resolve(process.cwd(), '..', target);
+    // Assumes CWD is root of repo
+    const targetDir = path.resolve(process.cwd(), target);
     // Create a temporary .repo dir in which to bundle packs
     const repoDir = path.join(targetDir, '.repo');
     fs.ensureDirSync(repoDir);
