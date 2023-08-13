@@ -37,7 +37,7 @@ services:
       DRONE_SERVER_HOST: "{{ config.server_host }}"
       DRONE_SERVER_PROTO: "{{ config.server_proto }}"
       DRONE_TLS_AUTOCERT: "{{ config.tls_autocert }}"
-      
+      DRONE_RPC_SECRET: "{{ config.rpc_secret }}"
     volumes:
       - {{ data_volume_name }}:/data
 {% if mount_docker_sock %}

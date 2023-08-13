@@ -3,8 +3,8 @@
 service_name: drone
 image:
   repository: drone/drone
-  tag: "1.1.0"
-  tag_pattern: semver:^1.1.0
+  tag: "2.18.0"
+  tag_pattern: semver:^2.18.0
 swarm-sync:
   managed: true
 
@@ -18,7 +18,8 @@ config:
   server_host: drone.example.com
   server_proto: https
   tls_autocert: "false"
-
+  rpc_secret: changeme
+  
 data_volume_name: drone_data
 
 deploy:
